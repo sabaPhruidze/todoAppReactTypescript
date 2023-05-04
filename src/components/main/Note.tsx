@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import circleNothing from "../../icons/circleNothing.svg";
 import circleRight from "../../icons/circleRight.svg";
 import trashCan from "../../icons/trashCan.svg";
@@ -13,10 +13,27 @@ export default function Note() {
   const [cIValue, sIValue] = useState(""); // set input value and current input value
   const [cArray, sArray] = useState<Note[]>([]);
 
+  useEffect(() => {
+    const storedData = localStorage.getItem("todoListData");
+    if (storedData) {
+      sArray(JSON.parse(storedData));
+    }
+  }, []);
+
   const handleDelete = (index: number) => {
     const newArray = [...cArray];
     newArray.splice(index, 1);
     sArray(newArray);
+    localStorage.setItem("todoListData", JSON.stringify(newArray));
+  };
+
+  const onClick = () => {
+    if (cIValue.length >= 1) {
+      const newArray = [...cArray, { text: cIValue, isChecked: false }];
+      sArray(newArray);
+      sIValue("");
+      localStorage.setItem("todoListData", JSON.stringify(newArray));
+    }
   };
 
   return (
@@ -32,15 +49,7 @@ export default function Note() {
           title="write at least 1 word, number or symbol"
           value={cIValue}
         />
-        <button
-          className="btn"
-          onClick={() => {
-            if (cIValue.length >= 1) {
-              sArray([...cArray, { text: cIValue, isChecked: false }]);
-              sIValue("");
-            }
-          }}
-        >
+        <button className="btn" onClick={onClick}>
           +
         </button>
       </div>
@@ -68,6 +77,10 @@ export default function Note() {
                   const newArray = [...cArray];
                   newArray[index].isChecked = !note.isChecked;
                   sArray(newArray);
+                  localStorage.setItem(
+                    "todoListData",
+                    JSON.stringify(newArray)
+                  );
                 }}
               />
               <img
