@@ -20,7 +20,7 @@ export default function Note() {
     }
   }, []);
 
-  const handleDelete = (index: number) => {
+  const deleteItem = (index: number) => {
     const newArray = [...cArray];
     newArray.splice(index, 1);
     sArray(newArray);
@@ -57,11 +57,11 @@ export default function Note() {
           +
         </button>
       </div>
-      {cArray.map((note: Note, index: number) => {
+      {cArray.map((note: Note, idx: number) => {
         const date = new Date();
 
         return (
-          <div className="container-outside" key={index}>
+          <div className="container-outside" key={idx}>
             <div className="containerTitle">
               {note.isChecked ? (
                 <h4>
@@ -70,6 +70,7 @@ export default function Note() {
               ) : (
                 <h4>{note.text}</h4>
               )}
+              {/* So is the circle will be checked it will have crossover */}
               <p>{date.toLocaleDateString()}</p>
             </div>
             <div className="d-flex-row">
@@ -79,7 +80,7 @@ export default function Note() {
                 className="icon doneOrNot"
                 onClick={() => {
                   const newArray = [...cArray];
-                  newArray[index].isChecked = !note.isChecked;
+                  newArray[idx].isChecked = !note.isChecked; // using this the circle will toggle in local storage as well.
                   sArray(newArray);
                   localStorage.setItem(
                     "localStorageData",
@@ -91,7 +92,7 @@ export default function Note() {
                 alt="remove"
                 src={trashCan}
                 className="icon remove"
-                onClick={() => handleDelete(index)}
+                onClick={() => deleteItem(idx)}
               />
             </div>
           </div>
