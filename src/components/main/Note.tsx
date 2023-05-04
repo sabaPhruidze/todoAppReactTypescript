@@ -14,7 +14,7 @@ export default function Note() {
   const [cArray, sArray] = useState<Note[]>([]);
 
   useEffect(() => {
-    const storedData = localStorage.getItem("todoListData");
+    const storedData = localStorage.getItem("localStorageData");
     if (storedData) {
       sArray(JSON.parse(storedData));
     }
@@ -24,16 +24,7 @@ export default function Note() {
     const newArray = [...cArray];
     newArray.splice(index, 1);
     sArray(newArray);
-    localStorage.setItem("todoListData", JSON.stringify(newArray));
-  };
-
-  const onClick = () => {
-    if (cIValue.length >= 1) {
-      const newArray = [...cArray, { text: cIValue, isChecked: false }];
-      sArray(newArray);
-      sIValue("");
-      localStorage.setItem("todoListData", JSON.stringify(newArray));
-    }
+    localStorage.setItem("localStorageData", JSON.stringify(newArray));
   };
 
   return (
@@ -49,7 +40,20 @@ export default function Note() {
           title="write at least 1 word, number or symbol"
           value={cIValue}
         />
-        <button className="btn" onClick={onClick}>
+        <button
+          className="btn"
+          onClick={() => {
+            if (cIValue.length >= 1) {
+              const newArray = [...cArray, { text: cIValue, isChecked: false }];
+              sArray(newArray);
+              sIValue("");
+              localStorage.setItem(
+                "localStorageData",
+                JSON.stringify(newArray)
+              );
+            }
+          }}
+        >
           +
         </button>
       </div>
@@ -78,7 +82,7 @@ export default function Note() {
                   newArray[index].isChecked = !note.isChecked;
                   sArray(newArray);
                   localStorage.setItem(
-                    "todoListData",
+                    "localStorageData",
                     JSON.stringify(newArray)
                   );
                 }}
