@@ -22,14 +22,14 @@
     position: absolute;
     right:15px;
     bottom:-130px;
-    color:rgb(212, 191, 163);
+    color:rgb(255, 255, 255);
     font-size: 16px;
 }
 .time {
     position: absolute;
     right:15px;
     bottom:-180px;
-    color:rgb(212, 191, 163);
+    color:rgb(255, 255, 255);
     font-size: 35px;
 }
 
@@ -129,7 +129,7 @@
 s {
     text-decoration-thickness: 2px ;
     text-decoration-color: rgb(63, 79, 255);
-    color:rgb(255, 255, 255);
+    color:whitesmoke;
 }
 .containerTitle p{
     font-size: 10px;
